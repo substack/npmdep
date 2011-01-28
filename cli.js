@@ -27,13 +27,17 @@ else if (cmd === 'tree' && process.argv[3]) {
     var start = process.argv[3];
     npmdep.tree(start, function (err, tree) {
         if (err) console.error(err)
-        else console.dir(tree)
-        /*Traverse(tree).forEach(function (node) {
-            for (var i = 0; i < this.level; i++) print('----')
-            if (this.isLeaf) console.log(node)
-            else console.log(this.key)
-        })
-        */
+        else {
+            Traverse(tree).forEach(function (node) {
+                for (var i = 0; i < this.level; i++) print('--')
+                if (this.isRoot) {
+                    console.log(start)
+                }
+                else {
+                    console.log(' ' + this.key)
+                }
+            })
+        }
     });
 }
 else {
