@@ -33,6 +33,13 @@ exports.requires = function (target, cb) {
     })
 };
 
+exports.deps = exports.dependencies = function (target, cb) {
+    exports.load(function (err, pkgs) {
+        if (err) cb(err)
+        else cb(null, pkgs[target].dependencies)
+    })
+};
+
 exports.tree = function (start, cb) {
     exports.load(function (err, pkgs) {
         if (err) cb(err)
@@ -46,12 +53,6 @@ exports.tree = function (start, cb) {
             return tree;
         })(start));
     })
-};
-
-var graphviz = require('graphviz');
-exports.graph = function (cb) {
-    exports.load(function (err, pkgs) {
-    });
 };
 
 exports.update = function (cb) {
