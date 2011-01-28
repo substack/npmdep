@@ -23,6 +23,7 @@ exports.load = function (cb) {
 exports.requires = function (target, cb) {
     exports.load(function (err, pkgs) {
         if (err) cb(err)
+        else if (!pkgs[target]) cb('No such package "' + target + '"')
         else cb(null, Hash(pkgs).filter(function (pkg, name) {
             return pkg.dependencies[target]
         }).keys)
@@ -32,6 +33,7 @@ exports.requires = function (target, cb) {
 exports.tree = function (start, cb) {
     exports.load(function (err, pkgs) {
         if (err) cb(err)
+        else if (!pkgs[start]) cb('No such package "' + start + '"')
         else cb(null, (function walk (node) {
             var tree = {};
             var deps = Object.keys(pkgs[node].dependencies || {});
