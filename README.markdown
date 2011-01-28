@@ -45,8 +45,8 @@ Generate a graph of npm with graphviz.
 
     npmdep graph npm-fdp.png fdp
 
-![npm fdp](http://substack.net/images/npmdep/npm-fdp.png)
+[![npm fdp](http://substack.net/images/npmdep/npm-fdp-prev.png)](http://substack.net/images/npmdep/npm-fdp.png)
 
     npmdep graph npm-twopi.png twopi
 
-![npm twopi](http://substack.net/images/npmdep/npm-twopi.png)
+[![npm twopi](http://substack.net/images/npmdep/npm-twopi-prev.png)](http://substack.net/images/npmdep/npm-twopi.png)
