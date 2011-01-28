@@ -32,20 +32,14 @@ exports.requires = function (target, cb) {
 exports.tree = function (start, cb) {
     exports.load(function (err, pkgs) {
         if (err) cb(err)
-        else {
-            function walk (node) {
-                var tree = {};
-                var deps = Object.keys(pkgs[node].dependencies || {});
-                deps.forEach(function (name) {
-                    tree[name] = walk(name)
-                })
-                return tree;
-            }
-            
-            var root = {};
-            root[start] = walk(start);
-            cb(null, root);
-        }
+        else cb(null, (function walk (node) {
+            var tree = {};
+            var deps = Object.keys(pkgs[node].dependencies || {});
+            deps.forEach(function (name) {
+                tree[name] = walk(name)
+            })
+            return tree;
+        })(start));
     })
 };
 
