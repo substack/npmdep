@@ -4,12 +4,12 @@ var Hash = require('traverse/hash');
 
 var fs = require('fs');
 var path = require('path');
-var cacheFile = __dirname + '/.cache';
 
 // Skip over these broken packages.
 var blacklist = [ 'balancer' ];
 
 var cached = {};
+var cacheFile = __dirname + '/.cache';
 if (path.existsSync(cacheFile)) {
     cached = JSON.parse(fs.readFileSync(cacheFile, 'utf8'));
 }
@@ -53,8 +53,19 @@ npm.load({ outfd : null }, function () {
                     fs.writeFile(cacheFile, JSON.stringify(cached));
                 }
                 
-                console.dir(cached);
+                main(cached);
             })
         ;
     })
 });
+
+var argv = require('optimist').argv;
+function main (packages) {
+    var target = argv._[0];
+    
+    Hash(packages).forEach(function (pkg, name) {
+        if (pkg.dependencies[target]) {
+            console.log(name);
+        }
+    });
+}
