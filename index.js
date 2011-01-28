@@ -12,12 +12,15 @@ exports.load = function (cb) {
     if (packages) {
         cb(null, packages)
     }
-    else {
-        fs.readFile(cacheFile, 'utf8', function (err, file) {
+    else path.exists(cacheFile, function (ex) {
+        if (!ex) {
+            cb('No packages cached. Run `npmdep update` first.')
+        }
+        else fs.readFile(cacheFile, 'utf8', function (err, file) {
             if (err) cb(err)
             else cb(null, JSON.parse(file));
         })
-    }
+    })
 };
 
 exports.requires = function (target, cb) {
@@ -43,6 +46,12 @@ exports.tree = function (start, cb) {
             return tree;
         })(start));
     })
+};
+
+var graphviz = require('graphviz');
+exports.graph = function (cb) {
+    exports.load(function (err, pkgs) {
+    });
 };
 
 exports.update = function (cb) {
@@ -85,6 +94,9 @@ function updateCache (cached, cb) {
                     newNames.push(name);
                 }
             });
+            
+            // This part is crazy slow and so wrong.
+            // If somebody wants to use the proper couch api, patches welcome.
             
             Seq.ap(newNames)
                 .parMap(4, function (name) {

@@ -15,7 +15,8 @@
     "dependencies" : {
         "traverse" : ">=0.2.3",
         "seq" : ">=0.1.7",
-        "npm" : ">=0.2.14"
+        "npm" : ">=0.2.14",
+        "graphviz" : ">=0.0.3"
     },
     "keywords" : [
         "npm",
