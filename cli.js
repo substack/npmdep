@@ -1,5 +1,7 @@
 var npmdep = require('npmdep');
 var Hash = require('traverse/hash');
+var Traverse = require('traverse');
+var print = require('util').print;
 
 var cmd = process.argv[2];
 if (cmd === 'update') {
@@ -21,6 +23,19 @@ else if (cmd === 'requires' && process.argv[3]) {
         })
     });
 }
+else if (cmd === 'tree' && process.argv[3]) {
+    var start = process.argv[3];
+    npmdep.tree(start, function (err, tree) {
+        if (err) console.error(err)
+        else console.dir(tree)
+        /*Traverse(tree).forEach(function (node) {
+            for (var i = 0; i < this.level; i++) print('----')
+            if (this.isLeaf) console.log(node)
+            else console.log(this.key)
+        })
+        */
+    });
+}
 else {
-    console.log('Commands: update, requires [pkg]');
+    console.log('Commands: update, requires [pkg], tree [pkg]');
 }
