@@ -54,25 +54,41 @@ else if (cmd === 'graph' && process.argv[3]) {
     var outfile = process.argv[3];
     var graphviz = require('graphviz');
     var g = graphviz.digraph('npm');
+    g.use = process.argv[4] || 'fdp'; // also twopi looks pretty good
     
     npmdep.load(function (err, pkgs) {
         if (err) cb(err)
         else {
             Hash(pkgs).forEach(function (pkg, name) {
-                g.addNode(name, { color : 'black' });
+                var mag = 255 - Math.floor((Hash(pkgs).filter(function (p) {
+                    return p.dependencies[name]
+                }).length || 0) / 50 * 255);
+                
+                var fhex = mag.toString(16);
+                if (fhex.length == 1) fhex = '0' + fhex;
+                
+                var node = g.addNode(name, {
+                    style : 'filled',
+                    fontcolor : mag > 150 ? 'black' : 'white',
+                    fillcolor : '"' + '#' + fhex + fhex + fhex + '"',
+                });
+                
                 var deps = pkg.dependencies || {};
                 if (typeof deps !== 'object') {
                     var obj = {};
                     obj[deps] = '*';
                     deps = obj;
                 }
+                
                 Object.keys(deps).forEach(function (dep) {
-                    g.addEdge(name, dep).set('color', 'red');
+                    var edge = g.addEdge(name, dep, {
+                        arrowhead : 'dot'
+                    });
                 });
             });
             
-            g.output(outfile.match(/\.([^.]+)$/)[1], outfile);
-            console.log('Wrote to ' + outfile);
+            g.output('png', outfile);
+            console.log('Writing to ' + outfile + '...');
         }
     });
 }
