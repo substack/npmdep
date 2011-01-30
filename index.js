@@ -56,11 +56,11 @@ exports.tree = function (start, cb) {
 };
 
 exports.update = function (cb) {
-    function after (err, pkgs) {
+    function after (err, pkgs, updated) {
         if (err) cb(err)
         else {
             packages = pkgs;
-            cb(null, pkgs);
+            cb(null, pkgs, updated);
         }
     }
     
@@ -108,10 +108,11 @@ function updateCache (cached, cb) {
                     }).bind(this), 250);
                 })
                 .seq(function () {
+                    var updated = {};
                     Hash(newNames, this.stack).forEach(function (pkg, name) {
                         var nv = name.split('@');
                         var n = nv[0], v = nv[1];
-                        cached[n] = {
+                        updated[n] = cached[n] = {
                             latest : v,
                             dependencies : pkg[name] && pkg[name].dependencies || {}
                         };
@@ -121,7 +122,7 @@ function updateCache (cached, cb) {
                         fs.writeFile(cacheFile, JSON.stringify(cached));
                     }
                     
-                    cb(null, cached);
+                    cb(null, cached, updated);
                 })
                 .catch(cb)
             ;

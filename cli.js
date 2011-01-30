@@ -6,11 +6,12 @@ var print = require('util').print;
 
 var cmd = process.argv[2] || '';
 if (cmd === 'update') {
-    console.log('Fetching packages...');
-    npmdep.update(function (err, pkgs) {
+    console.log('Fetching metadata for new packages...');
+    npmdep.update(function (err, pkgs, updated) {
         if (err) console.error(err.stack ? err.stack : err)
         else console.log(
-            'Update OK. %d packages updated.',
+            'Update OK. %d packages updated. %d packages total.',
+            Object.keys(updated).length,
             Object.keys(pkgs).length
         );
     });

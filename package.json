@@ -1,6 +1,6 @@
 {
     "name" : "npmdep",
-    "version" : "0.0.1",
+    "version" : "0.0.2",
     "description" : "Build a dependency graph for npm packages",
     "repository" : {
         "type" : "git",
@@ -9,9 +9,7 @@
     "bin" : {
         "npmdep" : "./cli.js"
     },
-    "modules" : {
-        "index" : "./index.js"
-    },
+    "main" : "./index.js",
     "dependencies" : {
         "traverse" : ">=0.2.3",
         "seq" : ">=0.1.7",
@@ -22,8 +20,7 @@
         "npm",
         "dependencies",
         "graph",
-        "contributors",
-        "npm"
+        "contributors"
     ],
     "author" : {
         "name" : "James Halliday",
