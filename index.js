@@ -1,6 +1,6 @@
 var npm = require('npm');
 var Seq = require('seq');
-var Hash = require('traverse/hash');
+var Hash = require('hashish');
 
 var fs = require('fs');
 var path = require('path');

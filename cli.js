@@ -1,5 +1,5 @@
 var npmdep = require('npmdep');
-var Hash = require('traverse/hash');
+var Hash = require('hashish');
 var Traverse = require('traverse');
 var Seq = require('seq');
 var print = require('util').print;
