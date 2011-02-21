@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 var npmdep = require('npmdep');
 var Hash = require('hashish');
 var Traverse = require('traverse');

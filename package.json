@@ -1,6 +1,6 @@
 {
     "name" : "npmdep",
-    "version" : "0.0.3",
+    "version" : "0.0.4",
     "description" : "Build a dependency graph for npm packages",
     "repository" : {
         "type" : "git",
