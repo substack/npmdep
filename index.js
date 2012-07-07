@@ -12,7 +12,7 @@ exports.load = function (cb) {
     if (packages) {
         cb(null, packages)
     }
-    else path.exists(cacheFile, function (ex) {
+    else fs.exists(cacheFile, function (ex) {
         if (!ex) {
             cb('No packages cached. Run `npmdep update` first.')
         }
@@ -64,7 +64,7 @@ exports.update = function (cb) {
         }
     }
     
-    path.exists(cacheFile, function (ex) {
+    fs.exists(cacheFile, function (ex) {
         if (ex) {
             exports.load(function (err, pkgs) {
                 if (err) cb(err)
