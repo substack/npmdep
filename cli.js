@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-var npmdep = require('./index.js');
+var npmdep = require('npmdep');
 var Hash = require('hashish');
 var Traverse = require('traverse');
 var Seq = require('seq');
