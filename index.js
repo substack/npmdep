@@ -12,8 +12,8 @@ exports.load = function (cb) {
     if (packages) {
         cb(null, packages)
     }
-    else path.exists(cacheFile, function (ex) {
-        if (!ex) {
+    else fs.stat(cacheFile, function (err, stats) {
+        if (!stats || !stats.isFile()) {
             cb('No packages cached. Run `npmdep update` first.')
         }
         else fs.readFile(cacheFile, 'utf8', function (err, file) {
@@ -64,8 +64,8 @@ exports.update = function (cb) {
         }
     }
     
-    path.exists(cacheFile, function (ex) {
-        if (ex) {
+    fs.stat(cacheFile, function (err, stats) {
+        if (stats && stats.isFile()) {
             exports.load(function (err, pkgs) {
                 if (err) cb(err)
                 else updateCache(pkgs, after);
